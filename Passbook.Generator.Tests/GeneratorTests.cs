@@ -152,8 +152,9 @@ public class GeneratorTests
 
         dynamic json = JsonSerializer.Deserialize<dynamic>(jsonString)!;
 
-        json.TryGetProperty("expirationDate", out JsonElement expirationDate);
-        Assert.Equal("2018-01-01T00:00:00+02:00", expirationDate.GetString());
+        json.TryGetProperty("expirationDate", out JsonElement expirationDate); 
+        var expectedExpirationDate = string.Format("{0:yyyy-MM-ddTHH:mm:sszzz}", new DateTime(2018, 01, 1));
+        Assert.Equal(expectedExpirationDate, expirationDate.GetString());
 
         json.TryGetProperty("relevantDate", out JsonElement relevantDate);
         Assert.Equal("2018-01-05T12:00:00-05:00", relevantDate.GetString());
