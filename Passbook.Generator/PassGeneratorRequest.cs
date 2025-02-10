@@ -67,6 +67,107 @@ public class PassGeneratorRequest
     /// </summary>
     public bool SharingProhibited { get; set; }
 
+    /// <summary>
+    /// Used to render an iOS application associated with the event in the event guide. 
+    /// This application has no ability to read passes off the device through passkit.
+    /// </summary>
+    public int AuxiliaryStoreIdentifiers { get; set; }
+
+    /// <summary>
+    /// Used to turn off the top gradient that is automatically applied to all passes.
+    /// </summary>
+    public bool SuppressHeaderDarkening { get; set; }
+
+    /// <summary>
+    /// Indicates whether the pass faces should automatically determine the foreground/labelColor from the background image. 
+    /// Ignores the colors specified by foregroundColor and labelColor.
+    /// </summary>
+    public bool UseAutomaticColors { get; set; }
+
+    /// <summary>
+    /// A background color to override the ticket footer (where seat information is located). 
+    /// Specified as a CSS-style RGB triple, such as rgb(23, 187, 82).
+    /// </summary>
+    public string FooterBackgroundColor { get; set; }
+
+    /// <summary>
+    /// A URL that launches the user into the issuer's flow for selling their current ticket. 
+    /// We recommend providing as deep a link as possible into the sale flow.
+    /// </summary>
+    public string SellURL { get; set; }
+
+    /// <summary>
+    /// A URL that launches the user into the issuer's flow for transferring the current ticket. 
+    /// We recommend providing as deep a link as possible into the transfer flow.
+    /// </summary>
+    public string TransferURL { get; set; }
+
+    /// <summary>
+    /// A URL that links out to the bag policy of the venue.
+    /// </summary>
+    public string BagPolicyURL { get; set; }
+
+    /// <summary>
+    /// A URL that links out to the food ordering page for the venue. 
+    /// This can be in-seat food delivery, pre-order for pickup at a vendor, or any other appropriate food ordering service.
+    /// </summary>
+    public string OrderFoodURL { get; set; }
+
+    /// <summary>
+    /// A URL that links to order merchandise for the specific event. 
+    /// This can be a ship-to-home eCommerce site, a pre-order to pick up at the venue, or any other appropriate merchandise flow. 
+    /// This link can also be updated throughout the user's journey to provide more accurately tailored links at certain times 
+    /// (for instance before vs. after a user has entered an event). This can be done through a pass update, 
+    /// which is referenced in the previous documentation for tickets.
+    /// </summary>
+    public string MerchandiseURL { get; set; }
+
+    /// <summary>
+    /// A URL that links to any documentation you have about public or private transit to the venue.
+    /// </summary>
+    public string TransitInformationURL { get; set; }
+
+    /// <summary>
+    /// A URL that links to any information you have about parking.
+    /// </summary>
+    public string ParkingInformationURL { get; set; }
+
+    /// <summary>
+    /// A URL that links to any content you have about getting to the venue.
+    /// </summary>
+    public string DirectionsInformationURL { get; set; }
+
+    /// <summary>
+    /// A URL that links to your or the venue's accessibility content.
+    /// </summary>
+    public string AccessibilityURL { get; set; }
+
+    /// <summary>
+    /// A URL that links to your experience to buy or access pre-paid parking, or general parking information.
+    /// </summary>
+    public string PurchaseParkingURL { get; set; }
+
+    /// <summary>
+    /// A URL that can link to experiences that you can add on to your ticket (e.g. loaded value, upgrades, etc.), 
+    /// or access your existing pre-purchased or pre-loaded add-on experiences, including any necessary QR or barcode links to access the experience.
+    /// </summary>
+    public string AddOnURL { get; set; }
+
+    /// <summary>
+    /// The preferred email address to contact the venue, event, or issuer.
+    /// </summary>
+    public string ContactVenueEmail { get; set; }
+
+    /// <summary>
+    /// A URL that links the user to the website of the venue, event, or issuer.
+    /// </summary>
+    public string ContactVenueWebsite { get; set; }
+
+    /// <summary>
+    /// The phone number that can be used to contact the venue, event, or issuer.
+    /// </summary>
+    public string ContactVenuePhoneNumber { get; set; }
+
     #endregion
 
     #region Images Files
@@ -515,6 +616,60 @@ public class PassGeneratorRequest
 
         writer.WritePropertyName("sharingProhibited");
         writer.WriteBooleanValue(SharingProhibited);
+
+        writer.WritePropertyName("auxiliaryStoreIdentifiers");
+        writer.WriteNumberValue(AuxiliaryStoreIdentifiers);
+
+        writer.WritePropertyName("suppressHeaderDarkening");
+        writer.WriteBooleanValue(SuppressHeaderDarkening);
+
+        writer.WritePropertyName("useAutomaticColors");
+        writer.WriteBooleanValue(UseAutomaticColors);
+
+        writer.WritePropertyName("footerBackgroundColor");
+        writer.WriteStringValue(FooterBackgroundColor);
+
+        writer.WritePropertyName("sellURL");
+        writer.WriteStringValue(SellURL);
+
+        writer.WritePropertyName("transferURL");
+        writer.WriteStringValue(TransferURL);
+
+        writer.WritePropertyName("bagPolicyURL");
+        writer.WriteStringValue(BagPolicyURL);
+
+        writer.WritePropertyName("orderFoodURL");
+        writer.WriteStringValue(OrderFoodURL);
+
+        writer.WritePropertyName("merchandiseURL");
+        writer.WriteStringValue(MerchandiseURL);
+
+        writer.WritePropertyName("transitInformationURL");
+        writer.WriteStringValue(TransitInformationURL);
+
+        writer.WritePropertyName("parkingInformationURL");
+        writer.WriteStringValue(ParkingInformationURL);
+
+        writer.WritePropertyName("directionsInformationURL");
+        writer.WriteStringValue(DirectionsInformationURL);
+
+        writer.WritePropertyName("accessibilityURL");
+        writer.WriteStringValue(AccessibilityURL);
+
+        writer.WritePropertyName("purchaseParkingURL");
+        writer.WriteStringValue(PurchaseParkingURL);
+
+        writer.WritePropertyName("addOnURL");
+        writer.WriteStringValue(AddOnURL);
+
+        writer.WritePropertyName("contactVenueEmail");
+        writer.WriteStringValue(ContactVenueEmail);
+
+        writer.WritePropertyName("contactVenueWebsite");
+        writer.WriteStringValue(ContactVenueWebsite);
+
+        writer.WritePropertyName("contactVenuePhoneNumber");
+        writer.WriteStringValue(ContactVenuePhoneNumber);
 
         if (!string.IsNullOrEmpty(LogoText))
         {
