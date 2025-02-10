@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
-        <id>dotnet-passbook</id>
-        <version>0.9.9</version>
-        <title>Passbook Generator</title>
-        <authors>Tomas McGuinness</authors>
-        <owners />
-        <licenseUrl>http://tomasmcguinness.mit-license.org/</licenseUrl>
-        <projectUrl>https://github.com/tomasmcguinness/dotnet-passbook</projectUrl>
+        <id>ADITUS.dotnet-passbook</id>
+        <version>0.10.0</version>
+        <title>ADITUS Passbook Generator</title>
+        <authors>Tomas McGuinness, Daniel Vogelsang</authors>
+        <owners /> 
+		<license type="expression">MIT</license>
+        <projectUrl>https://github.com/vogelsangaditus/dotnet-passbook</projectUrl>
         <requireLicenseAcceptance>true</requireLicenseAcceptance>
         <description>Generate pass files for Apple's iOS 6.0 passbook. This library allows you to build and sign a pkpass file.</description>
         <summary>Generate pass files for Apple's iOS 6.0 passbook.</summary>
