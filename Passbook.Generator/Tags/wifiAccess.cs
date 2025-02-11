@@ -1,26 +1,19 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
-namespace Passbook.Generator.Tags
+namespace Passbook.Generator.Tags;
+
+public class WifiAccess(IEnumerable<WifiNetwork> networks) : SemanticTag("wifiAccess")
 {
-    public class WifiAccess : SemanticTag
+    public override void WriteValue(JsonWriter writer)
     {
-        private readonly string _ssid;
-        private readonly string _password;
+        writer.WriteStartArray();
 
-        public WifiAccess(string ssid, string password) : base("wifiAccess")
+        foreach (var network in networks)
         {
-            _ssid = ssid;
-            _password = password;
+            network.WriteValue(writer);
         }
 
-        public override void WriteValue(JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("password");
-            writer.WriteValue(_ssid);
-            writer.WritePropertyName("ssid");
-            writer.WriteValue(_password);
-            writer.WriteEndObject();
-        }
+        writer.WriteEndArray();
     }
 }

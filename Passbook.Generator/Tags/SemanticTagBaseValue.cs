@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace Passbook.Generator.Tags
 {
@@ -17,6 +18,10 @@ namespace Passbook.Generator.Tags
         }
 
         public SemanticTagBaseValue(string tag, double value) : base(tag)
+        {
+            _value = value;
+        }
+        public SemanticTagBaseValue(string tag, DateTimeOffset value) : base(tag)
         {
             _value = value;
         }
