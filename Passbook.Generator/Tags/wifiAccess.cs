@@ -1,16 +1,19 @@
-﻿using System.Text.Json;
+﻿using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Passbook.Generator.Tags;
 
-public class WifiAccess(string ssid, string password) : SemanticTag("wifiAccess")
+public class WifiAccess(IEnumerable<WifiNetwork> networks) : SemanticTag("wifiAccess")
 {
     public override void WriteValue(Utf8JsonWriter writer)
     {
-        writer.WriteStartObject();
-        writer.WritePropertyName("ssid");
-        writer.WriteStringValue(ssid);
-        writer.WritePropertyName("password");
-        writer.WriteStringValue(password);
-        writer.WriteEndObject();
+        writer.WriteStartArray();
+
+        foreach (var network in networks)
+        {
+            network.WriteValue(writer);
+        }
+
+        writer.WriteEndArray();
     }
 }

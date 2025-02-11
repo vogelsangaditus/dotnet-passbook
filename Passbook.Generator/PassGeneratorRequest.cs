@@ -22,12 +22,14 @@ public class PassGeneratorRequest
         AuxiliaryFields = [];
         BackFields = [];
         Images = [];
+        RelevantDates = [];
         RelevantLocations = [];
         RelevantBeacons = [];
         AssociatedStoreIdentifiers = [];
         Localizations = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
         Barcodes = [];
         UserInfo = new Dictionary<string, object>();
+        PreferredStyleSchemes = [];
     }
 
     #region Standard Keys
@@ -269,6 +271,12 @@ public class PassGeneratorRequest
     /// </summary>
     public string GroupingIdentifier { get; set; }
 
+    /// <summary>
+    /// Style schemes provide a new way to assign pass type in a more dynamic nature. The strings 
+    /// correspond to "schemes" that the internally get resolved into a style.
+    /// </summary>
+    public List<PreferredStyleScheme> PreferredStyleSchemes { get; }
+
     #endregion
 
     #region Relevance Keys
@@ -276,7 +284,13 @@ public class PassGeneratorRequest
     /// <summary>
     /// Optional. Date and time when the pass becomes relevant. For example, the start time of a movie.
     /// </summary>
+    [Obsolete("Use RevevantDates with only one parameter.")]
     public DateTimeOffset? RelevantDate { get; set; }
+
+    /// <summary>
+    /// Optional. A list of time spans where the pass is relevant. No more than 10 entries can be specified.
+    /// </summary>
+    public List<RelevantDate> RelevantDates { get; }
 
     /// <summary>
     /// Optional. Locations where the passisrelevant. For example, the location of your store.
@@ -505,6 +519,8 @@ public class PassGeneratorRequest
 
         Trace.TraceInformation("Closing style section..");
         CloseStyleSpecificKey(writer);
+        
+        WritePreferredStyleSchemes(writer);
 
         WriteBarcode(writer);
         WriteUrls(writer);
@@ -518,6 +534,19 @@ public class PassGeneratorRequest
         {
             writer.WritePropertyName("relevantDate");
             writer.WriteStringValue(RelevantDate.Value.ToString("yyyy-MM-ddTHH:mm:ssK"));
+        }
+
+        if (RelevantDates.Count > 0)
+        {
+            writer.WritePropertyName("relevantDates");
+            writer.WriteStartArray();
+
+            foreach (var relevantDate in RelevantDates)
+            {
+                relevantDate.Write(writer);
+            }
+
+            writer.WriteEndArray();
         }
 
         if (MaxDistance.HasValue)
@@ -752,6 +781,23 @@ public class PassGeneratorRequest
         {
             writer.WritePropertyName("voided");
             writer.WriteBooleanValue(Voided.Value);
+        }
+    }
+
+    private void WritePreferredStyleSchemes(Utf8JsonWriter writer)
+    {
+        if (PreferredStyleSchemes.Count > 0)
+        {
+            writer.WritePropertyName("preferredStyleSchemes");
+            writer.WriteStartArray();
+
+            foreach (var scheme in PreferredStyleSchemes)
+            {
+                var key = scheme.ToString();
+                writer.WriteStringValue(char.ToLowerInvariant(key[0]) + key.Substring(1));               
+            }
+
+            writer.WriteEndArray();
         }
     }
 
