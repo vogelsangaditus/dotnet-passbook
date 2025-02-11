@@ -44,6 +44,14 @@ namespace Passbook.Generator
                     return "footer@2x.png";
                 case PassbookImage.Footer3X:
                     return "footer@3x.png";
+                case PassbookImage.Artwork:
+                    return "artwork.png";
+                case PassbookImage.Artwork2X:
+                    return "artwork@2x.png";
+                case PassbookImage.Artwork3X:
+                    return "artwork@3x.png";
+                case PassbookImage.VenueMap:
+                    return "venueMap.png";
                 default:
                     throw new NotImplementedException("Unknown PassbookImage type.");
             }
@@ -156,6 +164,26 @@ namespace Passbook.Generator
         /// <summary>
         /// @3x Retina footer, 286x15 points
         /// </summary>
-        Footer3X
+        Footer3X,
+
+        /// <summary>
+        /// Artwork, 358x448 points (alternative to 'background.png')
+        /// </summary>
+        Artwork,
+
+        /// <summary>
+        /// @2x Retina artwork, 358x448 points (alternative to 'background.png')
+        /// </summary>
+        Artwork2X,
+
+        /// <summary>
+        /// @3x Retina artwork, 358x448 points (alternative to 'background.png')
+        /// </summary>
+        Artwork3X,
+
+        /// <summary>
+        /// Issuer-provided static map of the venue, which will be shown in the event guide.
+        /// </summary>
+        VenueMap,
     }
 }
