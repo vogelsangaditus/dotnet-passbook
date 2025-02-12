@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text.Json;
+using Passbook.Generator.Extensions;
 
 namespace Passbook.Generator.Tags;
 
@@ -18,6 +19,11 @@ public abstract class SemanticTagBaseValue : SemanticTag
     }
 
     public SemanticTagBaseValue(string tag, double value) : base(tag)
+    {
+        _value = value;
+    }
+
+    public SemanticTagBaseValue(string tag, DateTimeOffset value) : base(tag)
     {
         _value = value;
     }
@@ -46,6 +52,9 @@ public abstract class SemanticTagBaseValue : SemanticTag
                 break;
             case long l:
                 writer.WriteNumberValue(l);
+                break;
+            case DateTimeOffset dt:
+                writer.WriteDateTimeValue(dt);
                 break;
         }
     }
