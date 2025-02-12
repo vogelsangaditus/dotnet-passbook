@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.Json;
 
 namespace Passbook.Generator.Extensions
@@ -7,7 +8,7 @@ namespace Passbook.Generator.Extensions
     {
         public static void WriteDateTimeValue(this Utf8JsonWriter writer, DateTimeOffset dateTime)
         {
-            writer.WriteStringValue(dateTime.ToString("yyyy-MM-ddTHH:mm:ssK"));
+            writer.WriteStringValue(dateTime.ToString("yyyy-MM-ddTHH:mm:ssK", CultureInfo.InvariantCulture));
         }
     }
 }
