@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Passbook.Generator.Exceptions;
+using Passbook.Generator.Extensions;
 using Passbook.Generator.Fields;
 using System;
 using System.Collections.Generic;
@@ -645,59 +646,24 @@ public class PassGeneratorRequest
         writer.WritePropertyName("sharingProhibited");
         writer.WriteValue(SharingProhibited);
 
-        writer.WritePropertyName("auxiliaryStoreIdentifiers");
-        writer.WriteValue(AuxiliaryStoreIdentifiers);
-
-        writer.WritePropertyName("suppressHeaderDarkening");
-        writer.WriteValue(SuppressHeaderDarkening);
-
-        writer.WritePropertyName("useAutomaticColors");
-        writer.WriteValue(UseAutomaticColors);
-
-        writer.WritePropertyName("footerBackgroundColor");
-        writer.WriteValue(FooterBackgroundColor);
-
-        writer.WritePropertyName("sellURL");
-        writer.WriteValue(SellURL);
-
-        writer.WritePropertyName("transferURL");
-        writer.WriteValue(TransferURL);
-
-        writer.WritePropertyName("bagPolicyURL");
-        writer.WriteValue(BagPolicyURL);
-
-        writer.WritePropertyName("orderFoodURL");
-        writer.WriteValue(OrderFoodURL);
-
-        writer.WritePropertyName("merchandiseURL");
-        writer.WriteValue(MerchandiseURL);
-
-        writer.WritePropertyName("transitInformationURL");
-        writer.WriteValue(TransitInformationURL);
-
-        writer.WritePropertyName("parkingInformationURL");
-        writer.WriteValue(ParkingInformationURL);
-
-        writer.WritePropertyName("directionsInformationURL");
-        writer.WriteValue(DirectionsInformationURL);
-
-        writer.WritePropertyName("accessibilityURL");
-        writer.WriteValue(AccessibilityURL);
-
-        writer.WritePropertyName("purchaseParkingURL");
-        writer.WriteValue(PurchaseParkingURL);
-
-        writer.WritePropertyName("addOnURL");
-        writer.WriteValue(AddOnURL);
-
-        writer.WritePropertyName("contactVenueEmail");
-        writer.WriteValue(ContactVenueEmail);
-
-        writer.WritePropertyName("contactVenueWebsite");
-        writer.WriteValue(ContactVenueWebsite);
-
-        writer.WritePropertyName("contactVenuePhoneNumber");
-        writer.WriteValue(ContactVenuePhoneNumber);
+        writer.WritePropertyIfNotNull("auxiliaryStoreIdentifiers", AuxiliaryStoreIdentifiers);
+        writer.WritePropertyIfNotNull("suppressHeaderDarkening", SuppressHeaderDarkening);
+        writer.WritePropertyIfNotNull("useAutomaticColors", UseAutomaticColors);
+        writer.WritePropertyIfNotNullOrEmpty("footerBackgroundColor", FooterBackgroundColor);
+        writer.WritePropertyIfNotNullOrEmpty("sellURL", SellURL);
+        writer.WritePropertyIfNotNullOrEmpty("transferURL", TransferURL);
+        writer.WritePropertyIfNotNullOrEmpty("bagPolicyURL", BagPolicyURL);
+        writer.WritePropertyIfNotNullOrEmpty("orderFoodURL", OrderFoodURL);
+        writer.WritePropertyIfNotNullOrEmpty("merchandiseURL", MerchandiseURL);
+        writer.WritePropertyIfNotNullOrEmpty("transitInformationURL", TransitInformationURL);
+        writer.WritePropertyIfNotNullOrEmpty("parkingInformationURL", ParkingInformationURL);
+        writer.WritePropertyIfNotNullOrEmpty("directionsInformationURL", DirectionsInformationURL);
+        writer.WritePropertyIfNotNullOrEmpty("accessibilityURL", AccessibilityURL);
+        writer.WritePropertyIfNotNullOrEmpty("purchaseParkingURL", PurchaseParkingURL);
+        writer.WritePropertyIfNotNullOrEmpty("addOnURL", AddOnURL);
+        writer.WritePropertyIfNotNullOrEmpty("contactVenueEmail", ContactVenueEmail);
+        writer.WritePropertyIfNotNullOrEmpty("contactVenueWebsite", ContactVenueWebsite);
+        writer.WritePropertyIfNotNullOrEmpty("contactVenuePhoneNumber", ContactVenuePhoneNumber);
 
         if (!string.IsNullOrEmpty(LogoText))
         {

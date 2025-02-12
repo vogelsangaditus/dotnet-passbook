@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Passbook.Generator.Extensions;
 
 namespace Passbook.Generator.Tags
 {
@@ -28,7 +29,14 @@ namespace Passbook.Generator.Tags
 
         public override void WriteValue(JsonWriter writer)
         {
-            writer.WriteValue(_value);
+            if (_value is DateTimeOffset dateTimeOffset)
+            {
+                writer.WriteDateTimeValue(dateTimeOffset);
+            }
+            else
+            {
+                writer.WriteValue(_value);
+            }
         }
     }
 }

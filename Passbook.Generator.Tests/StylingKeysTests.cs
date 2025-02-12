@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Text.Json;
@@ -18,16 +19,13 @@ namespace Passbook.Generator.Tests
             request.PreferredStyleSchemes.Add(PreferredStyleScheme.EventTicket);
             request.PreferredStyleSchemes.Add(PreferredStyleScheme.PosterEventTicket);
 
-            using MemoryStream ms = new MemoryStream();
-            using StreamWriter sr = new StreamWriter(ms);
-            using JsonWriter writer = new JsonTextWriter(sr);
-            writer.Formatting = Formatting.Indented;
+            using var stringWriter = new StringWriter(CultureInfo.InvariantCulture);
+            using var jsonWriter = new JsonTextWriter(stringWriter);
+            jsonWriter.Formatting = Formatting.Indented;
+    
+            request.Write(jsonWriter);
 
-            request.Write(writer);
-
-            string jsonString = Encoding.UTF8.GetString(ms.ToArray());
-
-            using var doc = JsonDocument.Parse(jsonString);
+            using var doc = JsonDocument.Parse(stringWriter.ToString());
             var root = doc.RootElement;
 
             if (!root.TryGetProperty("preferredStyleSchemes", out JsonElement preferredStyleSchemes))
