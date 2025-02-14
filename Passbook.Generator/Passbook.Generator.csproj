@@ -2,23 +2,24 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <Version>3.2.4.0</Version>
+    <Version>3.3.3.0</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <PackageId>dotnet-passbook</PackageId>
-    <Company>Tomas McGuinness</Company>
-    <Product>dotnet-passbook</Product>
+    <PackageId>ADITUS.dotnet-passbook</PackageId>
+    <Company>ADITUS</Company>
+    <Product>ADITUS.dotnet-passbook</Product>
     <Description>Generate pass files for Apple Wallet. This library allows you to build and sign a pkpass file.</Description>
     <PackageReleaseNotes>Fix issue where some Associated Store Identifier values where not being handled correctly (GitHub issue #179)</PackageReleaseNotes>
     <PackageTags>PassBook Wallet Apple Passkit</PackageTags>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression></PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/tomasmcguinness/dotnet-passbook</RepositoryUrl>
-    <Copyright>2022 Tomas McGuinness</Copyright>
+    <RepositoryUrl>https://github.com/vogelsangaditus/dotnet-passbook</RepositoryUrl>
+    <Copyright>2025 ADITUS</Copyright>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <AssemblyVersion>3.0.1</AssemblyVersion>
     <FileVersion>3.0.1</FileVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <Authors>Tomas McGuinness</Authors>
+    <Authors>Tomas McGuinness, Daniel Vogelsang</Authors>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
