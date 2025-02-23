@@ -649,7 +649,7 @@ public class PassGeneratorRequest
         writer.WritePropertyIfNotNull("auxiliaryStoreIdentifiers", AuxiliaryStoreIdentifiers);
         writer.WritePropertyIfNotNull("suppressHeaderDarkening", SuppressHeaderDarkening);
         writer.WritePropertyIfNotNull("useAutomaticColors", UseAutomaticColors);
-        writer.WritePropertyIfNotNullOrEmpty("footerBackgroundColor", FooterBackgroundColor);
+        writer.WritePropertyIfNotNullOrEmpty("footerBackgroundColor", ConvertColor(FooterBackgroundColor));
         writer.WritePropertyIfNotNullOrEmpty("sellURL", SellURL);
         writer.WritePropertyIfNotNullOrEmpty("transferURL", TransferURL);
         writer.WritePropertyIfNotNullOrEmpty("bagPolicyURL", BagPolicyURL);
