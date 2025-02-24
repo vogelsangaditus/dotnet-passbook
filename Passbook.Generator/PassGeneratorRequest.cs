@@ -70,12 +70,6 @@ public class PassGeneratorRequest
     public bool SharingProhibited { get; set; }
 
     /// <summary>
-    /// Used to render an iOS application associated with the event in the event guide. 
-    /// This application has no ability to read passes off the device through passkit.
-    /// </summary>
-    public int AuxiliaryStoreIdentifiers { get; set; }
-
-    /// <summary>
     /// Used to turn off the top gradient that is automatically applied to all passes.
     /// </summary>
     public bool SuppressHeaderDarkening { get; set; }
@@ -646,7 +640,6 @@ public class PassGeneratorRequest
         writer.WritePropertyName("sharingProhibited");
         writer.WriteValue(SharingProhibited);
 
-        writer.WritePropertyIfNotNull("auxiliaryStoreIdentifiers", AuxiliaryStoreIdentifiers);
         writer.WritePropertyIfNotNull("suppressHeaderDarkening", SuppressHeaderDarkening);
         writer.WritePropertyIfNotNull("useAutomaticColors", UseAutomaticColors);
         writer.WritePropertyIfNotNullOrEmpty("footerBackgroundColor", ConvertColor(FooterBackgroundColor));
