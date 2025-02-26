@@ -1,12 +1,11 @@
-﻿using Newtonsoft.Json;
-using Passbook.Generator.Tags;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Json;
+using Newtonsoft.Json;
 using Passbook.Generator.Tags;
 using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Passbook.Generator.Tests;
 
@@ -136,6 +135,63 @@ public class SemanticTagsTests
             }
 
             Assert.Equal("834AX5?15", password.GetString());
+        }
+    }
+
+
+    [Fact]
+    public void EnsureEventStartDateInfoIsGeneratedCorrectly()
+    {
+        var start = new DateTimeOffset(2025, 02, 26, 07, 03, 00, new TimeSpan(6, 0, 0));
+        var end = new DateTimeOffset(2025, 02, 28, 19, 17, 00, new TimeSpan(6, 0, 0));
+        PassGeneratorRequest request = new PassGeneratorRequest();
+        request.SemanticTags.Add(new EventStartDateInfo(start, true, "EAST"));
+        request.SemanticTags.Add(new EventEndDate(end));
+
+        using (var ms = new MemoryStream())
+        using (var sr = new StreamWriter(ms))
+        {
+            using (var writer = new JsonTextWriter(sr))
+            {
+                writer.Formatting = Formatting.Indented;
+                request.Write(writer);
+            }
+
+            string jsonString = Encoding.UTF8.GetString(ms.ToArray());
+
+            using var doc = JsonDocument.Parse(jsonString);
+            var root = doc.RootElement;
+
+            if (!root.TryGetProperty("semantics", out JsonElement semantics))
+            {
+                Assert.True(true, "semantics not found");
+            }
+
+            if (!semantics.TryGetProperty("eventStartDateInfo", out JsonElement startInfo))
+            {
+                Assert.True(true, "eventStartDateInfo not found");
+            }
+
+            if (!startInfo.TryGetProperty("date", out JsonElement date))
+            {
+                Assert.True(false, "eventStardDateInfo  has not a date property");
+            }
+
+            Assert.Equal("2025-02-26T07:03:00+06:00", date.GetString());
+
+            if (!startInfo.TryGetProperty("ignoreTimeComponents", out JsonElement ignoreTimeComponents))
+            {
+                Assert.True(false, "eventStardDateInfo  has not a ignoreTimeComponents property");
+            }
+
+            Assert.True(ignoreTimeComponents.GetBoolean());
+
+            if (!startInfo.TryGetProperty("timeZone", out JsonElement timeZone))
+            {
+                Assert.True(false, "eventStardDateInfo  has not a timeZone property");
+            }
+
+            Assert.Equal("EAST", timeZone.GetString());
         }
     }
 }
