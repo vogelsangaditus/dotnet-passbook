@@ -21,11 +21,13 @@ public class PassGeneratorRequest
         SecondaryFields = [];
         AuxiliaryFields = [];
         BackFields = [];
+        AdditionalInfoFields = [];
         Images = [];
         RelevantDates = [];
         RelevantLocations = [];
         RelevantBeacons = [];
         AssociatedStoreIdentifiers = [];
+        AuxiliaryStoreIdentifiers = [];
         Localizations = new Dictionary<string, Dictionary<string, string>>(StringComparer.OrdinalIgnoreCase);
         Barcodes = [];
         UserInfo = new Dictionary<string, object>();
@@ -246,6 +248,15 @@ public class PassGeneratorRequest
     public List<Field> BackFields { get; private set; }
 
     /// <summary>
+    /// Optional. An object that represents the fields that display in 
+    /// the Additional Ticket Info section on event tickets. This is located 
+    /// below the poster/ticket on the pass surface and is used for information 
+    /// that cannot be reasonably accommodated in the existing tags/keys     
+    /// for the ticket, pass details, or event guide
+    /// </summary>
+    public List<Field> AdditionalInfoFields { get; private set; }
+
+    /// <summary>
     /// Optional. Information specific to barcodes.
     /// </summary>
     public Barcode Barcode { get; private set; }
@@ -336,6 +347,13 @@ public class PassGeneratorRequest
 
     public List<long> AssociatedStoreIdentifiers { get; set; }
 
+    /// <summary>
+    /// Used to render an iOS application associated with the 
+    /// event in the event guide.This application has no
+    /// ability to read passes off the device through passkit.
+    /// </summary>
+    public List<long> AuxiliaryStoreIdentifiers { get; set; }
+
     public string AppLaunchURL { get; set; }
 
     #endregion
@@ -394,13 +412,20 @@ public class PassGeneratorRequest
         BackFields.Add(field);
     }
 
+    public void AddAdditionalInfoFields(Field field)
+    {
+        EnsureFieldKeyIsUnique(field.Key);
+        AdditionalInfoFields.Add(field);
+    }
+
     private void EnsureFieldKeyIsUnique(string key)
     {
         if (HeaderFields.Any(x => x.Key == key) ||
             PrimaryFields.Any(x => x.Key == key) ||
             SecondaryFields.Any(x => x.Key == key) ||
             AuxiliaryFields.Any(x => x.Key == key) ||
-            BackFields.Any(x => x.Key == key))
+            BackFields.Any(x => x.Key == key) ||
+            AdditionalInfoFields.Any(x => x.Key == key))
         {
             throw new DuplicateFieldKeyException(key);
         }
@@ -504,6 +529,8 @@ public class PassGeneratorRequest
         WriteSection(writer, "auxiliaryFields", this.AuxiliaryFields);
         Trace.TraceInformation("Writing back fields");
         WriteSection(writer, "backFields", this.BackFields);
+        Trace.TraceInformation("Writing additional info fields");
+        WriteSection(writer, "additionalInfoFields", this.AdditionalInfoFields);
 
         if (this.Style == PassStyle.BoardingPass)
         {
@@ -670,6 +697,20 @@ public class PassGeneratorRequest
             writer.WriteStartArray();
 
             foreach (var storeIdentifier in AssociatedStoreIdentifiers)
+            {
+                writer.WriteValue(storeIdentifier);
+            }
+
+            writer.WriteEndArray();
+        }
+
+
+        if (AuxiliaryStoreIdentifiers.Count > 0)
+        {
+            writer.WritePropertyName("auxiliaryStoreIdentifiers");
+            writer.WriteStartArray();
+
+            foreach (var storeIdentifier in AuxiliaryStoreIdentifiers)
             {
                 writer.WriteValue(storeIdentifier);
             }
