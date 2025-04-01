@@ -6,6 +6,7 @@
         {
             Message = message;
             EncryptionPublicKey = encryptionPublicKey;
+            RequiresAuthentication = requiresAuthentication;
         }
 
         public string Message { get; }
