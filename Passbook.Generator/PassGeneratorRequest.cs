@@ -840,6 +840,12 @@ public class PassGeneratorRequest
                 writer.WriteValue(Nfc.EncryptionPublicKey);
             }
 
+            if (Nfc.RequiresAuthentication != null)
+            {
+                writer.WritePropertyName("requiresAuthentication");
+                writer.WriteValue(Nfc.RequiresAuthentication.Value);
+            }
+
             writer.WriteEndObject();
         }
     }

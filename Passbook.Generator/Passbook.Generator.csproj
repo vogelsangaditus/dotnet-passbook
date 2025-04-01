@@ -3,7 +3,7 @@
   <PropertyGroup>
     <LangVersion>12</LangVersion>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <Version>3.3.16.0</Version>
+    <Version>3.3.17.0</Version>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>ADITUS.dotnet-passbook</PackageId>
     <Company>ADITUS</Company>
