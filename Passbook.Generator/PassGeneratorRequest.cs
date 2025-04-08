@@ -380,6 +380,8 @@ public class PassGeneratorRequest
 
     #endregion
 
+    public FidoProfile FidoProfile { get; set; }
+
     #region Helpers and Serialization
 
     public void AddHeaderField(Field field)
@@ -514,6 +516,12 @@ public class PassGeneratorRequest
         {
             Trace.TraceInformation("Writing NFC fields");
             WriteNfcKeys(writer);
+        }
+
+        if (FidoProfile != null)
+        {
+            Trace.TraceInformation("Writing FidoProfile fields");
+            WriteFidoProfile(writer);
         }
 
         Trace.TraceInformation("Opening style section..");
@@ -846,6 +854,19 @@ public class PassGeneratorRequest
                 writer.WriteValue(Nfc.RequiresAuthentication.Value);
             }
 
+            writer.WriteEndObject();
+        }
+    }
+
+    private void WriteFidoProfile(JsonWriter writer)
+    {
+        if (FidoProfile is FidoProfile profile)
+        {
+            writer.WritePropertyName("fidoProfile");
+            writer.WriteStartObject();
+            writer.WritePropertyIfNotNullOrEmpty("relyingPartyIdentifier", profile.RelyingPartyIdentifier);
+            writer.WritePropertyIfNotNullOrEmpty("accountHash", profile.AccountHash);
+            writer.WritePropertyIfNotNullOrEmpty("keyHash", profile.KeyHash);
             writer.WriteEndObject();
         }
     }
