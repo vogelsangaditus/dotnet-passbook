@@ -380,7 +380,13 @@ public class PassGeneratorRequest
 
     #endregion
 
+    #region Account Binding
+
     public FidoProfile FidoProfile { get; set; }
+
+    public IssuerBinding IssuerBindingData { get; set; }
+
+    #endregion
 
     #region Helpers and Serialization
 
@@ -522,6 +528,12 @@ public class PassGeneratorRequest
         {
             Trace.TraceInformation("Writing FidoProfile fields");
             WriteFidoProfile(writer);
+        }
+
+        if (IssuerBindingData != null)
+        {
+            Trace.TraceInformation("Writing IssuerBindingData fields");
+            WriteIssuerBindingData(writer);
         }
 
         Trace.TraceInformation("Opening style section..");
@@ -867,6 +879,18 @@ public class PassGeneratorRequest
             writer.WritePropertyIfNotNullOrEmpty("relyingPartyIdentifier", profile.RelyingPartyIdentifier);
             writer.WritePropertyIfNotNullOrEmpty("accountHash", profile.AccountHash);
             writer.WritePropertyIfNotNullOrEmpty("keyHash", profile.KeyHash);
+            writer.WriteEndObject();
+        }
+    }
+
+    private void WriteIssuerBindingData(JsonWriter writer)
+    {
+        if (IssuerBindingData is IssuerBinding binding)
+        {
+            writer.WritePropertyName("issuerBindingData");
+            writer.WriteStartObject();
+            writer.WritePropertyIfNotNullOrEmpty("issuerBindingData", binding.IssuerBindingData);
+            writer.WritePropertyIfNotNullOrEmpty("learnMoreURL", binding.LearnMoreURL);
             writer.WriteEndObject();
         }
     }
